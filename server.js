@@ -6,7 +6,9 @@ let url = require('url');
 function start(route, handle) {  // 서버 시작
     function onRequest(request, response) {
         let pathname = url.parse(request.url).pathname; // server 시작과 함께 전달받은 route 명을 pathname에 저장, 그후 pathname을 router.js로 전달
-        route(pathname, handle, response);
+        let queryData = url.parse(request.url, true).query;
+        
+        route(pathname, handle, response, queryData.productId);
     }
     
     http.createServer(onRequest).listen(8888);
